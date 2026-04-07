@@ -1,0 +1,103 @@
+[gd_scene format=3 uid="uid://dp06jh6q4o8pq"]
+
+[ext_resource type="Script" uid="uid://udpw7unhbr0j" path="res://Scripts/Characters/Cockroach.cs" id="1_gy6as"]
+[ext_resource type="Texture2D" uid="uid://bmex2k5cgj1os" path="res://Assets/Characters/cockroach.png" id="1_pb3qf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gy6as"]
+atlas = ExtResource("1_pb3qf")
+region = Rect2(0, 8, 16, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gfk53"]
+atlas = ExtResource("1_pb3qf")
+region = Rect2(16, 8, 16, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vc646"]
+atlas = ExtResource("1_pb3qf")
+region = Rect2(32, 8, 16, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i64rx"]
+atlas = ExtResource("1_pb3qf")
+region = Rect2(48, 8, 16, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pb3qf"]
+atlas = ExtResource("1_pb3qf")
+region = Rect2(16, 24, 16, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a7rqo"]
+atlas = ExtResource("1_pb3qf")
+region = Rect2(32, 24, 16, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3w3yt"]
+atlas = ExtResource("1_pb3qf")
+region = Rect2(48, 24, 16, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s555k"]
+atlas = ExtResource("1_pb3qf")
+region = Rect2(0, 24, 16, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a7rqo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gy6as")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gfk53")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vc646")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i64rx")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pb3qf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a7rqo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3w3yt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s555k")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pb3qf"]
+size = Vector2(16, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gy6as"]
+size = Vector2(16, 6)
+
+[node name="Cockroach" type="CharacterBody2D" unique_id=1090815498 node_paths=PackedStringArray("_animatedSprite", "_hitbox")]
+collision_layer = 4
+script = ExtResource("1_gy6as")
+_animatedSprite = NodePath("AnimatedSprite2D")
+_hitbox = NodePath("Area2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=802646360]
+sprite_frames = SubResource("SpriteFrames_a7rqo")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2126652820]
+visible = false
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_pb3qf")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1661392174]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1671540087]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_gy6as")
+debug_color = Color(0.5716685, 0.39038038, 1, 0.41960785)

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://dwhbabsh1dswx"]
+
+[ext_resource type="Texture2D" uid="uid://disq45i2biskx" path="res://Assets/Objects/painting_granny.png" id="1_dq1i3"]
+
+[node name="PaintingGranny" type="Node2D" unique_id=37338912]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1752877349]
+texture = ExtResource("1_dq1i3")

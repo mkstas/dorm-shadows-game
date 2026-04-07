@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://dl0b1sc318to8"]
+
+[ext_resource type="Script" uid="uid://baf4yrrtqe1if" path="res://Scripts/Characters/PropellerRat.cs" id="1_qdt4o"]
+[ext_resource type="Texture2D" uid="uid://c2f1k16qnhk6t" path="res://Assets/Characters/propeller_rat.png" id="1_x6uvq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qdt4o"]
+atlas = ExtResource("1_x6uvq")
+region = Rect2(0, 0, 16, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gll4o"]
+atlas = ExtResource("1_x6uvq")
+region = Rect2(16, 0, 16, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mgrr7"]
+atlas = ExtResource("1_x6uvq")
+region = Rect2(32, 0, 16, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yta4u"]
+atlas = ExtResource("1_x6uvq")
+region = Rect2(48, 0, 16, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wba6b"]
+atlas = ExtResource("1_x6uvq")
+region = Rect2(64, 0, 16, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_15fe6"]
+atlas = ExtResource("1_x6uvq")
+region = Rect2(80, 0, 16, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qi3yo"]
+atlas = ExtResource("1_x6uvq")
+region = Rect2(96, 0, 16, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s4o26"]
+atlas = ExtResource("1_x6uvq")
+region = Rect2(112, 0, 16, 26)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pxyia"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qdt4o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gll4o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mgrr7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yta4u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wba6b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_15fe6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qi3yo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s4o26")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qdt4o"]
+size = Vector2(48, 48)
+
+[node name="PropellerRat" type="Node2D" unique_id=1458050996 node_paths=PackedStringArray("_animatedSprite", "_interactArea", "_label")]
+script = ExtResource("1_qdt4o")
+_animatedSprite = NodePath("AnimatedSprite2D")
+_interactArea = NodePath("Area2D")
+_label = NodePath("Label")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1561494377]
+sprite_frames = SubResource("SpriteFrames_pxyia")
+animation = &"idle"
+frame = 6
+frame_progress = 0.33795348
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1596529621]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1697689611]
+shape = SubResource("RectangleShape2D_qdt4o")
+
+[node name="Label" type="Label" parent="." unique_id=1362365555]
+texture_filter = 2
+offset_left = 9.0
+offset_top = -17.0
+offset_right = 10.0
+offset_bottom = -11.0
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.050980393, 0.16862746, 0.27058825, 1)
+theme_override_font_sizes/font_size = 4

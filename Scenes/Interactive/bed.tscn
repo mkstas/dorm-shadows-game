@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cpduqgfrsl1nh"]
+
+[ext_resource type="Texture2D" uid="uid://bx1lvwvtfxxbr" path="res://Assets/Objects/bed.png" id="1_jvtp7"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_jvtp7"]
+polygon = PackedVector2Array(-16, -8, -16, 8, 15, 8, 15, 0, -11, 0, -11, -2, -15, -2, -15, -8)
+
+[node name="Bed" type="Node2D" unique_id=1144379974]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1951746416]
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=50641776]
+texture = ExtResource("1_jvtp7")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="StaticBody2D/Sprite2D" unique_id=2111854451]
+occluder = SubResource("OccluderPolygon2D_jvtp7")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=1033668416]
+visible = false
+polygon = PackedVector2Array(-16, -8, -16, 8, 15, 8, 15, -2, -14, -2, -14, -8)

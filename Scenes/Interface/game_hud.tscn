@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://c4fe2l6s3pbcm"]
+
+[ext_resource type="Texture2D" uid="uid://cl06qyla5626h" path="res://Assets/Interface/heart.png" id="1_ggn1j"]
+[ext_resource type="Script" uid="uid://cvqvj0nnixvec" path="res://Scripts/Interface/GameHud.cs" id="1_ygfsm"]
+
+[node name="GameHud" type="CanvasLayer" unique_id=629680183 node_paths=PackedStringArray("_healthBar")]
+script = ExtResource("1_ygfsm")
+_healthBar = NodePath("MarginContainer/HBoxContainer/HealthBar")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1919511742]
+texture_filter = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=24505292]
+layout_mode = 2
+
+[node name="HealthBar" type="HBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1367932320]
+texture_filter = 1
+layout_mode = 2
+theme_override_constants/separation = 38
+
+[node name="Control" type="Control" parent="MarginContainer/HBoxContainer/HealthBar" unique_id=825264023]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/HealthBar/Control" unique_id=1997849451]
+layout_mode = 0
+offset_right = 10.0
+offset_bottom = 8.0
+scale = Vector2(3, 3)
+texture = ExtResource("1_ggn1j")
+
+[node name="Control2" type="Control" parent="MarginContainer/HBoxContainer/HealthBar" unique_id=137853261]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/HealthBar/Control2" unique_id=2082807678]
+layout_mode = 0
+offset_right = 10.0
+offset_bottom = 8.0
+scale = Vector2(3, 3)
+texture = ExtResource("1_ggn1j")
+
+[node name="Control3" type="Control" parent="MarginContainer/HBoxContainer/HealthBar" unique_id=1878238594]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/HealthBar/Control3" unique_id=947756192]
+layout_mode = 0
+offset_right = 10.0
+offset_bottom = 8.0
+scale = Vector2(3, 3)
+texture = ExtResource("1_ggn1j")

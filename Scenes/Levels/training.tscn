@@ -1,0 +1,73 @@
+[gd_scene format=4 uid="uid://ihhn4vwavq8k"]
+
+[ext_resource type="TileSet" uid="uid://c0873y0x655kn" path="res://Resources/terrain_tile_set.tres" id="1_foc1a"]
+[ext_resource type="PackedScene" uid="uid://bvjarp4yfth37" path="res://Scenes/Interactive/door.tscn" id="2_g8fxf"]
+[ext_resource type="PackedScene" uid="uid://c4jkmvylgjsuu" path="res://Scenes/Characters/player.tscn" id="2_w0yq7"]
+[ext_resource type="PackedScene" uid="uid://d3dygkxol7v7e" path="res://Scenes/Interactive/table.tscn" id="3_4pp50"]
+[ext_resource type="PackedScene" uid="uid://4ka8urumawe6" path="res://Scenes/Interactive/tabouret.tscn" id="4_2k36j"]
+[ext_resource type="PackedScene" uid="uid://dub05wdcrq1ww" path="res://Scenes/Interactive/lamp.tscn" id="5_2k36j"]
+[ext_resource type="PackedScene" uid="uid://dl0b1sc318to8" path="res://Scenes/Characters/propeller_rat.tscn" id="6_4ba4c"]
+[ext_resource type="PackedScene" uid="uid://c4fe2l6s3pbcm" path="res://Scenes/Interface/game_hud.tscn" id="8_bel8q"]
+[ext_resource type="PackedScene" uid="uid://dp06jh6q4o8pq" path="res://Scenes/Characters/cockroach.tscn" id="8_yhnha"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_bel8q"]
+polygon = PackedVector2Array(14, 83, 288, 84, 288, 13, 14, 13)
+
+[node name="Training" type="Node2D" unique_id=1086054796]
+
+[node name="Terrain" type="TileMapLayer" parent="." unique_id=167361753]
+position = Vector2(-48, -48)
+tile_map_data = PackedByteArray("AAADAAMAAAAAAAAAAAADAAQAAAAAAAEAAAADAAUAAAAAAAEAAAADAAYAAAAAAAEAAAADAAcAAAAAAAEAAAADAAgAAAAAAAIAAAAEAAMAAAABAAAAAAAEAAQAAAABAAEAAAAEAAUAAAABAAEAAAAEAAYAAAABAAEAAAAEAAcAAAABAAEAAAAEAAgAAAABAAIAAAAFAAMAAAABAAAAAAAFAAQAAAABAAEAAAAFAAUAAAABAAEAAAAFAAYAAAABAAEAAAAFAAcAAAABAAEAAAAFAAgAAAABAAIAAAAGAAMAAAABAAAAAAAGAAQAAAABAAEAAAAGAAUAAAABAAEAAAAGAAYAAAABAAEAAAAGAAcAAAABAAEAAAAGAAgAAAABAAIAAAAHAAMAAAABAAAAAAAHAAQAAAABAAEAAAAHAAUAAAABAAEAAAAHAAYAAAABAAEAAAAHAAcAAAABAAEAAAAHAAgAAAABAAIAAAAIAAMAAAABAAAAAAAIAAQAAAABAAEAAAAIAAUAAAABAAEAAAAIAAYAAAABAAEAAAAIAAcAAAABAAEAAAAIAAgAAAABAAIAAAAJAAMAAAABAAAAAAAJAAQAAAABAAEAAAAJAAUAAAABAAEAAAAJAAYAAAABAAEAAAAJAAcAAAABAAEAAAAJAAgAAAABAAIAAAAKAAMAAAABAAAAAAAKAAQAAAABAAEAAAAKAAUAAAABAAEAAAAKAAYAAAABAAEAAAAKAAcAAAABAAEAAAAKAAgAAAABAAIAAAALAAQAAAABAAEAAAALAAUAAAABAAEAAAALAAYAAAABAAEAAAALAAcAAAABAAEAAAALAAgAAAABAAIAAAAMAAQAAAABAAEAAAAMAAUAAAABAAEAAAAMAAYAAAABAAEAAAAMAAcAAAABAAEAAAAMAAgAAAABAAIAAAANAAQAAAABAAEAAAANAAUAAAABAAEAAAANAAYAAAABAAEAAAANAAcAAAABAAEAAAANAAgAAAABAAIAAAAOAAgAAAABAAIAAAAPAAgAAAABAAIAAAAQAAgAAAABAAIAAAALAAMAAAABAAAAAAAMAAMAAAABAAAAAAANAAMAAAABAAAAAAAOAAMAAAABAAAAAAAPAAMAAAABAAAAAAAQAAMAAAABAAAAAAAOAAQAAAABAAEAAAAOAAUAAAABAAEAAAAOAAYAAAABAAEAAAAOAAcAAAABAAEAAAAPAAQAAAABAAEAAAAPAAUAAAABAAEAAAAPAAYAAAABAAEAAAAPAAcAAAABAAEAAAAQAAQAAAABAAEAAAAQAAUAAAABAAEAAAAQAAYAAAABAAEAAAAQAAcAAAABAAEAAAARAAgAAAABAAIAAAASAAgAAAABAAIAAAATAAgAAAABAAIAAAAUAAgAAAABAAIAAAARAAMAAAABAAAAAAASAAMAAAABAAAAAAATAAMAAAABAAAAAAAUAAMAAAABAAAAAAARAAQAAAABAAEAAAARAAUAAAABAAEAAAARAAYAAAABAAEAAAARAAcAAAABAAEAAAASAAQAAAABAAEAAAASAAUAAAABAAEAAAASAAYAAAABAAEAAAASAAcAAAABAAEAAAATAAQAAAABAAEAAAATAAUAAAABAAEAAAATAAYAAAABAAEAAAATAAcAAAABAAEAAAAUAAQAAAABAAEAAAAUAAUAAAABAAEAAAAUAAYAAAABAAEAAAAUAAcAAAABAAEAAAA=")
+tile_set = ExtResource("1_foc1a")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Terrain" unique_id=58287280]
+position = Vector2(48, 48)
+occluder = SubResource("OccluderPolygon2D_bel8q")
+
+[node name="Paths" type="Node2D" parent="." unique_id=1656256091]
+position = Vector2(-48, -48)
+
+[node name="Door" parent="Paths" unique_id=1495317302 node_paths=PackedStringArray("_spawnMarker") instance=ExtResource("2_g8fxf")]
+position = Vector2(88, 120)
+_spawnMarker = NodePath("../Marker2D")
+
+[node name="Marker2D" type="Marker2D" parent="Paths" unique_id=639966163]
+position = Vector2(88, 120)
+
+[node name="Objects" type="Node2D" parent="." unique_id=551706678]
+
+[node name="Table" parent="Objects" unique_id=1185584039 instance=ExtResource("3_4pp50")]
+position = Vector2(160, 72)
+
+[node name="Tabouret" parent="Objects" unique_id=582497471 instance=ExtResource("4_2k36j")]
+position = Vector2(136, 76)
+
+[node name="Lighting" type="Node2D" parent="." unique_id=1240601343]
+
+[node name="Lamp" parent="Lighting" unique_id=480925027 instance=ExtResource("5_2k36j")]
+position = Vector2(112, 20)
+
+[node name="Lamp2" parent="Lighting" unique_id=2061102110 instance=ExtResource("5_2k36j")]
+position = Vector2(224, 20)
+
+[node name="Enemies" type="Node2D" parent="." unique_id=1240313478]
+
+[node name="Cockroach" parent="Enemies" unique_id=1090815498 instance=ExtResource("8_yhnha")]
+position = Vector2(200, 76)
+Speed = 24.0
+PatrolDistance = 48.0
+
+[node name="Characters" type="Node2D" parent="." unique_id=2110796234]
+
+[node name="PropellerRat" parent="Characters" unique_id=1458050996 node_paths=PackedStringArray("_player") instance=ExtResource("6_4ba4c")]
+position = Vector2(88, 51)
+_player = NodePath("../Player")
+_message = "Учишься балету, Поттер?"
+
+[node name="Player" parent="Characters" unique_id=898028143 instance=ExtResource("2_w0yq7")]
+position = Vector2(40, 72)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=2026155029]
+color = Color(0.39215687, 0.39215687, 0.39215687, 1)
+
+[node name="GameHud" parent="." unique_id=629680183 instance=ExtResource("8_bel8q")]

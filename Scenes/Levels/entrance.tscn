@@ -1,0 +1,55 @@
+[gd_scene format=4 uid="uid://b8rc6n5d4osep"]
+
+[ext_resource type="TileSet" uid="uid://c0873y0x655kn" path="res://Resources/terrain_tile_set.tres" id="1_oaret"]
+[ext_resource type="PackedScene" uid="uid://bvjarp4yfth37" path="res://Scenes/Interactive/door.tscn" id="2_f7ygv"]
+[ext_resource type="PackedScene" uid="uid://cpduqgfrsl1nh" path="res://Scenes/Interactive/bed.tscn" id="3_mi3iu"]
+[ext_resource type="PackedScene" uid="uid://dd3w1xkiqqruj" path="res://Scenes/Interactive/cabinet.tscn" id="4_oaret"]
+[ext_resource type="PackedScene" uid="uid://c4jkmvylgjsuu" path="res://Scenes/Characters/player.tscn" id="5_02it4"]
+[ext_resource type="PackedScene" uid="uid://dwhbabsh1dswx" path="res://Scenes/Interactive/painting_granny.tscn" id="5_qka3x"]
+[ext_resource type="PackedScene" uid="uid://c4fe2l6s3pbcm" path="res://Scenes/Interface/game_hud.tscn" id="6_ygmoi"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_fomq8"]
+polygon = PackedVector2Array(62, 131, 62, 61, 194, 61, 194, 131)
+
+[node name="Entrance" type="Node2D" unique_id=52512282]
+
+[node name="Terrain" type="TileMapLayer" parent="." unique_id=439649216]
+position = Vector2(-16, -16)
+tile_map_data = PackedByteArray("AAABAAEAAAAAAAAAAAABAAIAAAAAAAEAAAABAAMAAAAAAAEAAAACAAEAAAABAAAAAAACAAIAAAABAAEAAAACAAMAAAABAAEAAAADAAEAAAABAAAAAAADAAIAAAABAAEAAAADAAMAAAABAAEAAAAEAAEAAAABAAAAAAAEAAIAAAABAAEAAAAEAAMAAAABAAEAAAAFAAEAAAABAAAAAAAFAAIAAAABAAEAAAAFAAMAAAABAAEAAAAGAAEAAAABAAAAAAAGAAIAAAABAAEAAAAGAAMAAAABAAEAAAAHAAEAAAABAAAAAAAHAAIAAAABAAEAAAAHAAMAAAABAAEAAAABAAQAAAAAAAEAAAABAAUAAAAAAAEAAAABAAYAAAAAAAIAAAACAAQAAAABAAEAAAACAAUAAAABAAEAAAACAAYAAAABAAIAAAADAAQAAAABAAEAAAADAAUAAAABAAEAAAADAAYAAAABAAIAAAAEAAQAAAABAAEAAAAEAAUAAAABAAEAAAAEAAYAAAABAAIAAAAFAAQAAAABAAEAAAAFAAUAAAABAAEAAAAFAAYAAAABAAIAAAAGAAQAAAABAAEAAAAGAAUAAAABAAEAAAAGAAYAAAABAAIAAAAHAAQAAAABAAEAAAAHAAUAAAABAAEAAAAHAAYAAAABAAIAAAAIAAEAAAABAAAAAAAIAAIAAAABAAEAAAAIAAMAAAABAAEAAAAIAAQAAAABAAEAAAAIAAUAAAABAAEAAAAIAAYAAAABAAIAAAAJAAEAAAABAAAAAAAJAAIAAAABAAEAAAAJAAMAAAABAAEAAAAJAAQAAAABAAEAAAAJAAUAAAABAAEAAAAJAAYAAAABAAIAAAAKAAEAAAACAAAAAAAKAAIAAAACAAEAAAAKAAMAAAACAAEAAAAKAAQAAAACAAEAAAAKAAUAAAACAAEAAAAKAAYAAAACAAIAAAA=")
+tile_set = ExtResource("1_oaret")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Terrain" unique_id=2042529965]
+position = Vector2(-32, -32)
+occluder = SubResource("OccluderPolygon2D_fomq8")
+
+[node name="Paths" type="Node2D" parent="." unique_id=1023673571]
+position = Vector2(-48, -48)
+
+[node name="Door" parent="Paths" unique_id=1495317302 node_paths=PackedStringArray("_spawnMarker") instance=ExtResource("2_f7ygv")]
+position = Vector2(136, 120)
+_nextLevelPath = "res://Scenes/Levels/training.tscn"
+_spawnMarker = NodePath("../Marker2D")
+
+[node name="Marker2D" type="Marker2D" parent="Paths" unique_id=95131944]
+position = Vector2(136, 120)
+
+[node name="Objects" type="Node2D" parent="." unique_id=274309575]
+position = Vector2(-16, -16)
+
+[node name="Bed" parent="Objects" unique_id=1144379974 instance=ExtResource("3_mi3iu")]
+position = Vector2(48, 88)
+
+[node name="Cabinet" parent="Objects" unique_id=1126019586 instance=ExtResource("4_oaret")]
+position = Vector2(144, 80)
+
+[node name="PaintingGranny" parent="Objects" unique_id=37338912 instance=ExtResource("5_qka3x")]
+position = Vector2(80, 56)
+rotation = 0.17453292
+
+[node name="Player" parent="." unique_id=898028143 instance=ExtResource("5_02it4")]
+position = Vector2(88, 72)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1157626522]
+color = Color(0.39215687, 0.39215687, 0.39215687, 1)
+
+[node name="GameHud" parent="." unique_id=629680183 instance=ExtResource("6_ygmoi")]

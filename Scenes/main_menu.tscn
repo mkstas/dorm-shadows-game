@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://sw52mmppow7g"]
+
+[ext_resource type="Script" uid="uid://co255joptns0m" path="res://Scripts/Interface/MainMenu.cs" id="1_48xlc"]
+[ext_resource type="Texture2D" uid="uid://c4jj78pdarnds" path="res://Assets/Interface/button.png" id="2_1ehe0"]
+[ext_resource type="PackedScene" uid="uid://b8rc6n5d4osep" path="res://Scenes/Levels/entrance.tscn" id="2_ce3w2"]
+
+[node name="MainMenu" type="Control" unique_id=1133807145 node_paths=PackedStringArray("_buttonPlay", "_buttonQuit")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_48xlc")
+_buttonPlay = NodePath("MarginContainer/VBoxContainer/ButtonPlay/TextureButton")
+_buttonQuit = NodePath("MarginContainer/VBoxContainer/ButtonQuit/TextureButton")
+_startGameLevel = ExtResource("2_ce3w2")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1618641663]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1017816118]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 48
+
+[node name="ButtonPlay" type="Control" parent="MarginContainer/VBoxContainer" unique_id=1646653806]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="MarginContainer/VBoxContainer/ButtonPlay" unique_id=1668221452]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -16.0
+offset_right = 80.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("2_1ehe0")
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ButtonPlay" unique_id=1922930179]
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.0
+offset_top = -11.5
+offset_right = 46.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.050980393, 0.16862746, 0.27058825, 1)
+text = "Новая игра"
+
+[node name="ButtonQuit" type="Control" parent="MarginContainer/VBoxContainer" unique_id=1075265004]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextureButton" type="TextureButton" parent="MarginContainer/VBoxContainer/ButtonQuit" unique_id=860858465]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -16.0
+offset_right = 80.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("2_1ehe0")
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ButtonQuit" unique_id=287254795]
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -26.0
+offset_top = -11.5
+offset_right = 26.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.050980393, 0.16862746, 0.27058825, 1)
+text = "Выход"

@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 namespace DormShadowsGame.Scripts;
 
@@ -7,7 +6,7 @@ public partial class GameManager : Node
 {
 	public static GameManager Instance { get; private set; }
 
-	public event Action<int> HealthChanged;
+	[Signal] public delegate void HealthChangedEventHandler(int currentHealth);
 
 	public float Gravity { get; } = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 	public bool IsTransitioning { get; set; }
@@ -19,8 +18,10 @@ public partial class GameManager : Node
 		get => _health;
 		set
 		{
-			_health = value;
-			HealthChanged?.Invoke(_health);
+			_health = Mathf.Max(0, value);
+			EmitSignal(SignalName.HealthChanged, _health);
+
+			if (_health <= 0) Respawn();
 		}
 	}
 
@@ -30,14 +31,9 @@ public partial class GameManager : Node
 		else QueueFree();
 	}
 
-	public void TakeDamage(int amount)
+	private void Respawn()
 	{
-		Health -= amount;
-
-		if (Health <= 0)
-		{
-			Health = 3;
-			GetTree().ChangeSceneToFile("res://Scenes/Levels/entrance.tscn");
-		}
+		Health = 3;
+		GetTree().ChangeSceneToFile("res://Scenes/Levels/entrance.tscn");
 	}
 }

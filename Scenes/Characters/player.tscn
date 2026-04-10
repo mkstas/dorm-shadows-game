@@ -96,10 +96,14 @@ gradient = SubResource("Gradient_40svl")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="Player" type="CharacterBody2D" unique_id=898028143 node_paths=PackedStringArray("_animatedSprite")]
+[node name="Player" type="CharacterBody2D" unique_id=898028143 node_paths=PackedStringArray("_sprite")]
 collision_layer = 2
 script = ExtResource("1_40svl")
-_animatedSprite = NodePath("AnimatedSprite2D")
+_sprite = NodePath("AnimatedSprite2D")
+JumpVelocity = -140.0
+MaxJumpVelocity = -150.0
+JumpHoldTime = 0.2
+JumpCutMultiplier = 0.4
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=70693703]
 sprite_frames = SubResource("SpriteFrames_khnq4")

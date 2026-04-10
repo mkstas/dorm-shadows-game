@@ -1,148 +1,135 @@
 using Godot;
-using System;
 
 namespace DormShadowsGame.Scripts.Characters;
 
 public partial class Player : CharacterBody2D
 {
-	[Export] private AnimatedSprite2D _animatedSprite;
+	[Export] private AnimatedSprite2D _sprite;
 
 	[ExportGroup("Movement")]
-	[Export] public float Speed = 80.0f;
-	[Export] public float Acceleration = 1600.0f;
-	[Export] public float Friction = 1800.0f;
+	[Export] public float Speed { get; set; } = 80.0f;
+	[Export] public float Acceleration { get; set; } = 1600.0f;
+	[Export] public float Friction { get; set; } = 1800.0f;
 
-	[ExportGroup("Jump")]
-	[Export] public float JumpVelocity = -250.0f;
-	[Export] public float MaxJumpVelocity = -400.0f;
-	[Export] public float JumpHoldTime = 0.2f;
-	[Export] public float JumpCutMultiplier = 0.2f;
+	[ExportGroup("Jump Settings")]
+	[Export] public float JumpVelocity { get; set; } = -140.0f;
+	[Export] public float MaxJumpVelocity { get; set; } = -150.0f;
+	[Export] public float JumpHoldTime { get; set; } = 0.2f;
+	[Export] public float JumpCutMultiplier { get; set; } = 0.4f;
 
-	[ExportGroup("Combat")]
-	[Export] public float InvulnerabilityDuration = 1.5f;
-
-	private bool _holdingJump;
-	private float _jumpHoldTimer;
-	private float _lastDirection = 1f;
+	private bool _isInvulnerable;
 	private bool _movementEnabled = true;
-	private bool _isInvulnerable = false;
+	private float _jumpHoldTimer;
+	private bool _isJumping;
+	private float _lastFacingDirection = 1.0f;
 
 	public override void _Ready()
 	{
 		AddToGroup("player");
-		ApplySpawnPosition();
-	}
-
-	public override void _PhysicsProcess(double delta)
-	{
-		if (!_movementEnabled)
-		{
-			Velocity = Vector2.Zero;
-			MoveAndSlide();
-			return;
-		}
-
-		float fDelta = (float)delta;
-		Vector2 velocity = Velocity;
-		float direction = Input.GetAxis("move_left", "move_right");
-
-		ApplyGravity(ref velocity, fDelta);
-		HandleJump(ref velocity, fDelta);
-		HandleHorizontalMovement(ref velocity, direction, fDelta);
-
-		Velocity = velocity;
-		MoveAndSlide();
-
-		UpdateAnimation(direction);
-	}
-
-	public void SetMovementEnabled(bool enabled)
-	{
-		_movementEnabled = enabled;
-	}
-
-	public void TakeDamage(int amount, Vector2 sourcePosition)
-	{
-		if (_isInvulnerable) return;
-
-		GameManager.Instance.TakeDamage(amount);
-
-		ApplyKnockback(sourcePosition);
-		BecomeInvulnerable(InvulnerabilityDuration);
-	}
-
-	private void ApplyKnockback(Vector2 sourcePosition)
-	{
-		float pushDir = GlobalPosition.X > sourcePosition.X ? 1 : -1;
-		Velocity = new Vector2(pushDir * 250f, -150f);
-	}
-
-	private async void BecomeInvulnerable(float duration)
-	{
-		_isInvulnerable = true;
-
-		int cycles = Mathf.Max(1, (int)(duration * 10));
-		Tween tween = CreateTween().SetLoops(cycles);
-		tween.TweenProperty(_animatedSprite, "modulate:a", 0.0f, 0.025f);
-		tween.TweenProperty(_animatedSprite, "modulate:a", 1.0f, 0.025f);
-
-		await ToSignal(GetTree().CreateTimer(duration), SceneTreeTimer.SignalName.Timeout);
-
-		_isInvulnerable = false;
-		_animatedSprite.Modulate = new Color(1, 1, 1, 1);
-	}
-
-	private void ApplySpawnPosition()
-	{
 		if (GameManager.Instance.PlayerSpawnPosition != Vector2.Zero)
 		{
 			GlobalPosition = GameManager.Instance.PlayerSpawnPosition;
 			GameManager.Instance.PlayerSpawnPosition = Vector2.Zero;
+			_sprite.Play("idle");
 		}
 	}
 
-	private void ApplyGravity(ref Vector2 velocity, float delta)
+	public override void _PhysicsProcess(double delta)
 	{
-		if (IsOnFloor()) return;
-		float gravityScale = (_holdingJump && velocity.Y < 0 && _jumpHoldTimer < JumpHoldTime) ? 0.45f : 1.0f;
-		velocity.Y += GameManager.Instance.Gravity * gravityScale * delta;
-		if (_holdingJump && velocity.Y < 0) _jumpHoldTimer += delta;
-	}
+		if (!_movementEnabled) return;
 
-	private void HandleJump(ref Vector2 velocity, float delta)
-	{
+		float fDelta = (float)delta;
+		Vector2 velocity = Velocity;
+
+		if (!IsOnFloor())
+		{
+			float gravityMult = (_isJumping && Input.IsActionPressed("move_jump") && velocity.Y < 0) ? 0.4f : 1.0f;
+			velocity.Y += GameManager.Instance.Gravity * gravityMult * fDelta;
+		}
+
 		if (Input.IsActionJustPressed("move_jump") && IsOnFloor())
 		{
 			velocity.Y = JumpVelocity;
-			_holdingJump = true;
+			_isJumping = true;
 			_jumpHoldTimer = 0f;
 		}
-		if (_holdingJump && Input.IsActionPressed("move_jump") && velocity.Y < 0)
+
+		if (_isJumping)
 		{
-			float t = Mathf.Clamp(_jumpHoldTimer / JumpHoldTime, 0, 1);
-			velocity.Y = Mathf.Lerp(JumpVelocity, MaxJumpVelocity, t);
+			if (Input.IsActionPressed("move_jump") && _jumpHoldTimer < JumpHoldTime)
+			{
+				_jumpHoldTimer += fDelta;
+				float t = Mathf.Min(_jumpHoldTimer / JumpHoldTime, 1.0f);
+				float smoothT = t * t * (3 - 2 * t);
+				velocity.Y = Mathf.Lerp(JumpVelocity, MaxJumpVelocity, smoothT);
+			}
+			else
+			{
+				_isJumping = false;
+			}
+
+			if (Input.IsActionJustReleased("move_jump") && velocity.Y < 0)
+			{
+				velocity.Y *= JumpCutMultiplier;
+				_isJumping = false;
+			}
 		}
-		if (Input.IsActionJustReleased("move_jump") && velocity.Y < 0)
+
+		float axis = Input.GetAxis("move_left", "move_right");
+		float targetSpeed = axis * Speed;
+		velocity.X = Mathf.MoveToward(velocity.X, targetSpeed, (axis != 0 ? Acceleration : Friction) * fDelta);
+
+		Velocity = velocity;
+
+		MoveAndSlide();
+
+		if (IsOnCeiling())
 		{
-			velocity.Y *= JumpCutMultiplier;
-			_holdingJump = false;
+			if (Velocity.Y < 0)
+			{
+				Velocity = new Vector2(Velocity.X, 0);
+			}
+			_isJumping = false;
 		}
-		if (IsOnFloor()) _holdingJump = false;
+
+		UpdateAnimation(axis);
 	}
 
-	private void HandleHorizontalMovement(ref Vector2 velocity, float direction, float delta)
+	private void UpdateAnimation(float axis)
 	{
-		float targetSpeed = direction * Speed;
-		float weight = (direction != 0) ? Acceleration : Friction;
-		velocity.X = Mathf.MoveToward(velocity.X, targetSpeed, weight * delta);
-		if (direction != 0) _lastDirection = direction;
+		if (axis != 0) _lastFacingDirection = axis;
+		_sprite.FlipH = _lastFacingDirection < 0;
+
+		string anim = IsOnFloor() ? (Mathf.Abs(Velocity.X) > 0.1f ? "walk" : "idle") : "jump";
+		if (_sprite.Animation != anim) _sprite.Play(anim);
 	}
 
-	private void UpdateAnimation(float direction)
+	public void TakeDamage(int amount, Vector2 sourcePos)
 	{
-		string anim = IsOnFloor() ? (Mathf.Abs(Velocity.X) > 1f ? "walk" : "idle") : "jump";
-		_animatedSprite.Play(anim);
-		float lookDir = direction != 0 ? direction : _lastDirection;
-		_animatedSprite.FlipH = lookDir < 0;
+		if (_isInvulnerable) return;
+
+		GameManager.Instance.Health -= amount;
+		ApplyKnockback(sourcePos);
+		FlashEffect();
 	}
+
+	private void ApplyKnockback(Vector2 sourcePos)
+	{
+		float dir = GlobalPosition.X > sourcePos.X ? 1 : -1;
+		Velocity = new Vector2(dir * 250f, -150f);
+	}
+
+	private async void FlashEffect()
+	{
+		_isInvulnerable = true;
+		using var tween = CreateTween();
+		tween.SetLoops(6);
+		tween.TweenProperty(_sprite, "modulate:a", 0f, 0.1f);
+		tween.TweenProperty(_sprite, "modulate:a", 1f, 0.1f);
+
+		await ToSignal(GetTree().CreateTimer(1.2f), SceneTreeTimer.SignalName.Timeout);
+		_isInvulnerable = false;
+	}
+
+	public void SetMovementEnabled(bool enabled) => _movementEnabled = enabled;
 }

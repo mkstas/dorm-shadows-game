@@ -7,8 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://4ka8urumawe6" path="res://Scenes/Interactive/tabouret.tscn" id="4_2k36j"]
 [ext_resource type="PackedScene" uid="uid://dub05wdcrq1ww" path="res://Scenes/Interactive/lamp.tscn" id="5_2k36j"]
 [ext_resource type="PackedScene" uid="uid://dl0b1sc318to8" path="res://Scenes/Characters/propeller_rat.tscn" id="6_4ba4c"]
-[ext_resource type="PackedScene" uid="uid://c4fe2l6s3pbcm" path="res://Scenes/Interface/game_hud.tscn" id="8_bel8q"]
 [ext_resource type="PackedScene" uid="uid://dp06jh6q4o8pq" path="res://Scenes/Characters/cockroach.tscn" id="8_yhnha"]
+[ext_resource type="PackedScene" uid="uid://c4fe2l6s3pbcm" path="res://Scenes/Interface/game_hud.tscn" id="9_yhnha"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_bel8q"]
 polygon = PackedVector2Array(14, 83, 288, 84, 288, 13, 14, 13)
@@ -54,8 +54,6 @@ position = Vector2(224, 20)
 
 [node name="Cockroach" parent="Enemies" unique_id=1090815498 instance=ExtResource("8_yhnha")]
 position = Vector2(200, 76)
-Speed = 24.0
-PatrolDistance = 48.0
 
 [node name="Characters" type="Node2D" parent="." unique_id=2110796234]
 
@@ -70,4 +68,4 @@ position = Vector2(40, 72)
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=2026155029]
 color = Color(0.39215687, 0.39215687, 0.39215687, 1)
 
-[node name="GameHud" parent="." unique_id=629680183 instance=ExtResource("8_bel8q")]
+[node name="GameHud" parent="." unique_id=629680183 instance=ExtResource("9_yhnha")]

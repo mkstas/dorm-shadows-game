@@ -3,40 +3,52 @@
 [ext_resource type="Script" uid="uid://udpw7unhbr0j" path="res://Scripts/Characters/Cockroach.cs" id="1_gy6as"]
 [ext_resource type="Texture2D" uid="uid://bmex2k5cgj1os" path="res://Assets/Characters/cockroach.png" id="1_pb3qf"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_jende"]
+atlas = ExtResource("1_pb3qf")
+region = Rect2(16, 16, 16, 8)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_gy6as"]
 atlas = ExtResource("1_pb3qf")
-region = Rect2(0, 8, 16, 8)
+region = Rect2(0, 0, 16, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gfk53"]
 atlas = ExtResource("1_pb3qf")
-region = Rect2(16, 8, 16, 8)
+region = Rect2(16, 0, 16, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vc646"]
 atlas = ExtResource("1_pb3qf")
-region = Rect2(32, 8, 16, 8)
+region = Rect2(32, 0, 16, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i64rx"]
 atlas = ExtResource("1_pb3qf")
-region = Rect2(48, 8, 16, 8)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pb3qf"]
-atlas = ExtResource("1_pb3qf")
-region = Rect2(16, 24, 16, 8)
+region = Rect2(48, 0, 16, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a7rqo"]
 atlas = ExtResource("1_pb3qf")
-region = Rect2(32, 24, 16, 8)
+region = Rect2(16, 8, 16, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3w3yt"]
 atlas = ExtResource("1_pb3qf")
-region = Rect2(48, 24, 16, 8)
+region = Rect2(32, 8, 16, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s555k"]
 atlas = ExtResource("1_pb3qf")
-region = Rect2(0, 24, 16, 8)
+region = Rect2(48, 8, 16, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sjnnk"]
+atlas = ExtResource("1_pb3qf")
+region = Rect2(0, 8, 16, 8)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_a7rqo"]
 animations = [{
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_jende")
+}],
+"loop": false,
+"name": &"die",
+"speed": 6.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gy6as")
@@ -52,12 +64,9 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 8.0
+"speed": 6.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pb3qf")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_a7rqo")
 }, {
@@ -66,17 +75,20 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_s555k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sjnnk")
 }],
 "loop": true,
 "name": &"walk",
-"speed": 8.0
+"speed": 6.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pb3qf"]
 size = Vector2(16, 6)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gy6as"]
-size = Vector2(16, 6)
+size = Vector2(16, 5)
 
 [node name="Cockroach" type="CharacterBody2D" unique_id=1090815498 node_paths=PackedStringArray("_sprite", "Hitbox")]
 collision_layer = 4
@@ -86,10 +98,9 @@ Hitbox = NodePath("Area2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=802646360]
 sprite_frames = SubResource("SpriteFrames_a7rqo")
-animation = &"idle"
+animation = &"die"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2126652820]
-visible = false
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_pb3qf")
 
@@ -98,6 +109,6 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1671540087]
-position = Vector2(0, 1)
+position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_gy6as")
 debug_color = Color(0.5716685, 0.39038038, 1, 0.41960785)

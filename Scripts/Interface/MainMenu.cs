@@ -1,3 +1,4 @@
+using DormShadowsGame.Scripts.Managers;
 using Godot;
 
 namespace DormShadowsGame.Scripts.Interface;
@@ -6,7 +7,7 @@ public partial class MainMenu : Control
 {
 	[Export] private TextureButton _buttonPlay;
 	[Export] private TextureButton _buttonQuit;
-	[Export] private PackedScene _startGameLevel;
+	[Export] private string _entryLevelPath = "res://Scenes/Levels/entrance.tscn";
 
 	public override void _Ready()
 	{
@@ -20,6 +21,6 @@ public partial class MainMenu : Control
 		_buttonQuit.Pressed -= OnQuitPressed;
 	}
 
-	private void OnPlayPressed() => GetTree().ChangeSceneToPacked(_startGameLevel);
+	private void OnPlayPressed() => SceneTransition.Instance.FadeToScene(_entryLevelPath);
 	private void OnQuitPressed() => GetTree().Quit();
 }

@@ -80,7 +80,7 @@ _label = NodePath("Label")
 sprite_frames = SubResource("SpriteFrames_pxyia")
 animation = &"idle"
 frame = 6
-frame_progress = 0.33795348
+frame_progress = 0.7142418
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1596529621]
 collision_layer = 0

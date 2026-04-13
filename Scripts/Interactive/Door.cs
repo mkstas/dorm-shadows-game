@@ -25,7 +25,7 @@ public partial class Door : Node2D
 
 	public override void _Input(InputEvent @event)
 	{
-		if (_keyHint.Visible && @event.IsActionPressed("interact") && !GameManager.Instance.IsTransitioning)
+		if (_keyHint.Visible && @event.IsActionPressed("interact") && !GameManager.Instance.IsSceneTransitioning)
 		{
 			SceneTransition.Instance.FadeToScene(_nextLevelPath);
 		}

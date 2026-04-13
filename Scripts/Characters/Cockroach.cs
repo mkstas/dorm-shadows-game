@@ -7,9 +7,9 @@ public partial class Cockroach : BaseEnemy
 	private enum State { Walking, Waiting }
 
 	[Export] private AnimatedSprite2D _sprite;
-	[Export] public float Speed = 24.0f;
+	[Export] public float Speed = 64.0f;
 	[Export] public float PatrolDistance = 48.0f;
-	[Export] public float WaitTime = 1.5f;
+	[Export] public float WaitTime = 1.0f;
 
 	private Vector2 _anchorPosition;
 	private int _direction = 1;
@@ -25,6 +25,9 @@ public partial class Cockroach : BaseEnemy
 
 	public override void _PhysicsProcess(double delta)
 	{
+		// Если враг мертв, не выполняем логику движения
+		if (IsDead) return;
+
 		float fDelta = (float)delta;
 
 		if (_state == State.Walking)
@@ -39,7 +42,7 @@ public partial class Cockroach : BaseEnemy
 			}
 
 			vel.X = _direction * Speed;
-			if (!IsOnFloor()) vel.Y += GameManager.Instance.Gravity * fDelta;
+			if (!IsOnFloor()) vel.Y += (float)ProjectSettings.GetSetting("physics/2d/default_gravity") * fDelta;
 
 			Velocity = vel;
 			MoveAndSlide();
@@ -65,4 +68,7 @@ public partial class Cockroach : BaseEnemy
 		_sprite.Play("walk");
 		_sprite.FlipH = _direction < 0;
 	}
+
+	// Переопределяем Die, если нужно специфичное поведение для таракана,
+	// но базовый класс теперь справляется сам.
 }

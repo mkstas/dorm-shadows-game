@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://co255joptns0m" path="res://Scripts/Interface/MainMenu.cs" id="1_48xlc"]
 [ext_resource type="Texture2D" uid="uid://c4jj78pdarnds" path="res://Assets/Interface/button.png" id="2_1ehe0"]
-[ext_resource type="PackedScene" uid="uid://b8rc6n5d4osep" path="res://Scenes/Levels/entrance.tscn" id="2_ce3w2"]
 
 [node name="MainMenu" type="Control" unique_id=1133807145 node_paths=PackedStringArray("_buttonPlay", "_buttonQuit")]
 layout_mode = 3
@@ -14,7 +13,6 @@ grow_vertical = 2
 script = ExtResource("1_48xlc")
 _buttonPlay = NodePath("MarginContainer/VBoxContainer/ButtonPlay/TextureButton")
 _buttonQuit = NodePath("MarginContainer/VBoxContainer/ButtonQuit/TextureButton")
-_startGameLevel = ExtResource("2_ce3w2")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1618641663]
 layout_mode = 1

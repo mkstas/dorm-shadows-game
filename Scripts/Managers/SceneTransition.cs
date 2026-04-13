@@ -24,7 +24,7 @@ public partial class SceneTransition : CanvasLayer
 
 	public async void FadeToScene(string scenePath)
 	{
-		GameManager.Instance.IsTransitioning = true;
+		GameManager.Instance.IsSceneTransitioning = true;
 		_fadeRect.MouseFilter = Control.MouseFilterEnum.Stop;
 
 		SetPlayerInput(false);
@@ -51,7 +51,7 @@ public partial class SceneTransition : CanvasLayer
 
 		SetPlayerInput(true);
 		_fadeRect.MouseFilter = Control.MouseFilterEnum.Ignore;
-		GameManager.Instance.IsTransitioning = false;
+		GameManager.Instance.IsSceneTransitioning = false;
 	}
 
 	private void SetPlayerInput(bool enabled)
@@ -60,7 +60,7 @@ public partial class SceneTransition : CanvasLayer
 
 		if (playerNode is Player player)
 		{
-			player.SetMovementEnabled(enabled);
+			GameManager.Instance.PlayerMovementEnabled = enabled;
 		}
 	}
 }

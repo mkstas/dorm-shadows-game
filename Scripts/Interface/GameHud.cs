@@ -1,3 +1,4 @@
+using DormShadowsGame.Scripts.Managers;
 using Godot;
 using System;
 
@@ -64,7 +65,6 @@ public partial class GameHud : CanvasLayer
 
 	private void AnimatePauseMenu(float targetOpacity, float targetBlur, Action onComplete = null)
 	{
-		// Переименовал в _fadeTween для ясности, так как теперь анимируем всё сразу
 		if (_fadeTween != null && _fadeTween.IsRunning())
 		{
 			_fadeTween.Kill();
@@ -72,14 +72,12 @@ public partial class GameHud : CanvasLayer
 
 		_fadeTween = CreateTween();
 		_fadeTween.SetPauseMode(Tween.TweenPauseMode.Process);
-		_fadeTween.SetParallel(true); // Позволяет анимировать прозрачность и блюр одновременно
+		_fadeTween.SetParallel(true);
 
-		// 1. Анимация прозрачности кнопок и фона
 		_fadeTween.TweenProperty(_pauseMenu, "modulate:a", targetOpacity, _animationDuration)
 			.SetTrans(Tween.TransitionType.Cubic)
 			.SetEase(Tween.EaseType.Out);
 
-		// 2. Анимация блюра
 		if (_blurOverlay?.Material is ShaderMaterial sm)
 		{
 			_fadeTween.TweenProperty(sm, "shader_parameter/blur_amount", targetBlur, _animationDuration)
@@ -126,7 +124,7 @@ public partial class GameHud : CanvasLayer
 	private void OnMainMenuPressed()
 	{
 		GetTree().Paused = false;
-		GetTree().ChangeSceneToFile(_mainManuPath);
+		SceneTransition.Instance.FadeToScene(_mainManuPath);
 	}
 
 	private void OnQuitPressed() => GetTree().Quit();

@@ -56,7 +56,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 4.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -64,7 +64,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"jump",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -81,7 +81,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
-"speed": 4.0
+"speed": 6.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3etf2"]
@@ -96,20 +96,15 @@ gradient = SubResource("Gradient_40svl")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="Player" type="CharacterBody2D" unique_id=898028143 node_paths=PackedStringArray("_sprite")]
+[node name="Player" type="CharacterBody2D" unique_id=898028143 node_paths=PackedStringArray("_sprite", "_stompDetector")]
 collision_layer = 2
 script = ExtResource("1_40svl")
 _sprite = NodePath("AnimatedSprite2D")
-JumpVelocity = -140.0
-MaxJumpVelocity = -150.0
-JumpHoldTime = 0.2
-JumpCutMultiplier = 0.4
+_stompDetector = NodePath("RayCast2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=70693703]
 sprite_frames = SubResource("SpriteFrames_khnq4")
-animation = &"idle"
-frame = 3
-frame_progress = 0.26001665
+animation = &"jump"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=609203122]
 shape = SubResource("RectangleShape2D_3etf2")
@@ -123,3 +118,7 @@ energy = 0.3
 shadow_enabled = true
 shadow_filter = 2
 texture = SubResource("GradientTexture2D_al8ar")
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=1831551234]
+target_position = Vector2(0, 15)
+collision_mask = 4

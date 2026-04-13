@@ -21,7 +21,6 @@ SceneTransition="*uid://cf7w3rmhh8ufo"
 
 [display]
 
-window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [dotnet]

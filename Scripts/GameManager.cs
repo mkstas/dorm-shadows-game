@@ -1,3 +1,4 @@
+using DormShadowsGame.Scripts.Managers;
 using Godot;
 
 namespace DormShadowsGame.Scripts;
@@ -5,11 +6,13 @@ namespace DormShadowsGame.Scripts;
 public partial class GameManager : Node
 {
 	public static GameManager Instance { get; private set; }
-
-	[Signal] public delegate void HealthChangedEventHandler(int currentHealth);
-
 	public float Gravity { get; } = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-	public bool IsTransitioning { get; set; }
+	public bool IsSceneTransitioning { get; set; }
+
+	public override void _EnterTree() => Instance = this;
+
+	[Signal] public delegate void HealthChangedEventHandler(int health);
+
 	public Vector2 PlayerSpawnPosition { get; set; }
 
 	private int _health = 3;
@@ -25,15 +28,11 @@ public partial class GameManager : Node
 		}
 	}
 
-	public override void _EnterTree()
-	{
-		if (Instance == null) Instance = this;
-		else QueueFree();
-	}
+	public bool PlayerMovementEnabled { get; set; } = true;
 
 	private void Respawn()
 	{
 		Health = 3;
-		GetTree().ChangeSceneToFile("res://Scenes/Levels/entrance.tscn");
+		SceneTransition.Instance.FadeToScene("res://Scenes/Levels/entrance.tscn");
 	}
 }

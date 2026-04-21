@@ -75,6 +75,7 @@ script = ExtResource("1_qdt4o")
 _animatedSprite = NodePath("AnimatedSprite2D")
 _interactArea = NodePath("Area2D")
 _label = NodePath("Label")
+_message = "Добро пожаловать в общагу"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1561494377]
 sprite_frames = SubResource("SpriteFrames_pxyia")
@@ -93,7 +94,7 @@ shape = SubResource("RectangleShape2D_qdt4o")
 texture_filter = 2
 offset_left = 9.0
 offset_top = -17.0
-offset_right = 10.0
+offset_right = 123.0
 offset_bottom = -10.0
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.050980393, 0.16862746, 0.27058825, 1)

@@ -11,21 +11,32 @@ public partial class Cockroach : BaseEnemy
 	[Export] public float PatrolDistance = 48.0f;
 	[Export] public float WaitTime = 1.0f;
 
-	private Vector2 _anchorPosition;
-	private int _direction = 1;
+	// 1 для движения вправо от старта, -1 для движения влево от старта
+	[Export] public int Direction = 1;
+
+	private Vector2 _startPosition;
+	private Vector2 _targetPosition;
+	private Vector2 _currentTarget; // Точка, к которой идем сейчас
+
 	private State _state = State.Walking;
 	private float _timer;
 
 	public override void _Ready()
 	{
 		base._Ready();
-		_anchorPosition = GlobalPosition;
-		_sprite.Play("walk");
+		_startPosition = GlobalPosition;
+
+		// Рассчитываем конечную точку патруля
+		_targetPosition = _startPosition + new Vector2(Direction * PatrolDistance, 0);
+
+		// Начинаем идти к дальней точке
+		_currentTarget = _targetPosition;
+
+		UpdateVisuals();
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		// Если враг мертв, не выполняем логику движения
 		if (IsDead) return;
 
 		float fDelta = (float)delta;
@@ -33,16 +44,21 @@ public partial class Cockroach : BaseEnemy
 		if (_state == State.Walking)
 		{
 			Vector2 vel = Velocity;
-			float offset = GlobalPosition.X - _anchorPosition.X;
 
-			if ((_direction == 1 && offset >= PatrolDistance) || (_direction == -1 && offset <= 0))
+			// Считаем расстояние до текущей цели по X
+			float diff = _currentTarget.X - GlobalPosition.X;
+
+			// Если мы дошли до цели (или проскочили её)
+			if ((Direction == 1 && diff <= 0) || (Direction == -1 && diff >= 0))
 			{
 				StartWaiting();
 				return;
 			}
 
-			vel.X = _direction * Speed;
-			if (!IsOnFloor()) vel.Y += (float)ProjectSettings.GetSetting("physics/2d/default_gravity") * fDelta;
+			vel.X = Direction * Speed;
+
+			if (!IsOnFloor())
+				vel.Y += (float)ProjectSettings.GetSetting("physics/2d/default_gravity") * fDelta;
 
 			Velocity = vel;
 			MoveAndSlide();
@@ -59,16 +75,23 @@ public partial class Cockroach : BaseEnemy
 		_state = State.Waiting;
 		_timer = WaitTime;
 		_sprite.Play("idle");
-		_direction *= -1;
+
+		// Разворачиваем направление
+		Direction *= -1;
+
+		// Меняем текущую цель: если были в точке патруля — идем домой, и наоборот
+		_currentTarget = (_currentTarget == _targetPosition) ? _startPosition : _targetPosition;
 	}
 
 	private void StartWalking()
 	{
 		_state = State.Walking;
-		_sprite.Play("walk");
-		_sprite.FlipH = _direction < 0;
+		UpdateVisuals();
 	}
 
-	// Переопределяем Die, если нужно специфичное поведение для таракана,
-	// но базовый класс теперь справляется сам.
+	private void UpdateVisuals()
+	{
+		_sprite.Play("walk");
+		_sprite.FlipH = Direction < 0;
+	}
 }
